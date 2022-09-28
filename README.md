@@ -26,6 +26,10 @@ Then, you are able to run the code:
 - s: the start label 
 - g: the goal label
 
+You can define your owned turning consideration in "A-star-with-least-turning/src/graph_utils.cpp" isTurning founction
+
+The idea is that if the robot is doing turning, then it will add extra g_value to the node. 
+Hence, when the a star calculates the shortest path, the turning will be considered. 
 
 ## License
 PBS is released under USC – Research License. See license.md for further details.
