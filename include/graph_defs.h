@@ -17,14 +17,9 @@
 
 struct DotVertex
 {
-  bool isTwoWay;
   double position_x;
   double position_y;
-  double outgoing_weight;
-
   std::string label;
-  std::string source;
-  std::string target;
 };
 
 struct DotEdge
@@ -47,5 +42,3 @@ typedef boost::property_map<NavGraph, double DotEdge::*>::type WeightMap;
 typedef boost::property_map<NavGraph, double DotEdge::*>::type WidthMap;
 typedef boost::property_map<NavGraph, std::string DotVertex::*>::type NameMap;
 typedef boost::property_map<NavGraph, double DotVertex::*>::type CoordMap;
-
-typedef std::vector<VertexDesc> GraphPathType;

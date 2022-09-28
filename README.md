@@ -19,34 +19,14 @@ make
 
 Then, you are able to run the code:
 ```
-./pbs -m random-32-32-20.map -a random-32-32-20-random-1.scen -o test.csv --outputPaths=paths.txt -k 50 -t 60
+./ASTAR_least_turning -m twenty_robots -s l06 -g r01
 ```
 
-- m: the map file from the MAPF benchmark
-- a: the scenario file from the MAPF benchmark
-- o: the output file that contains the search statistics
-- outputPaths: the output file that contains the paths 
-- k: the number of agents
-- t: the runtime limit
+- m: the map file in dot format
+- s: the start label 
+- g: the goal label
 
-You can find more details and explanations for all parameters with:
-```
-./pbs --help
-```
-
-To test the code on more instances,
-you can download the MAPF instances from the [MAPF benchmark](https://movingai.com/benchmarks/mapf/index.html).
-In particular, the format of the scen files is explained [here](https://movingai.com/benchmarks/formats.html).
-For a given number of agents k, the first k rows of the scen file are used to generate the k pairs of start and target locations.
 
 ## License
 PBS is released under USC – Research License. See license.md for further details.
- 
-## References
-[1] Hang Ma, Daniel Harabor, Peter J. Stuckey, Jiaoyahng Li and S. Koenig. 
-Searching with Consistent Prioritization for Multi-Agent Path Finding. 
-In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 7643-7650, 2019.
 
-[2] Jiaoyang Li, Zhe Chen, Daniel Harabor, Peter J. Stuckey and Sven Koenig.
-MAPF-LNS2: Fast Repairing for Multi-Agent Path Finding via Large Neighborhood Search
-In Proceedings of the AAAI Conference on Artificial Intelligence, (in print), 2022.
