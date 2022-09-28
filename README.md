@@ -1,6 +1,8 @@
 # A star with least turning
-A modified a star algorithm for topological map to generate a shortest path considering turning counts. 
-
+A modified a star algorithm for topological map to generate a shortest path considering turning weight. 
+It calculates the angle between the current vertex' parent, current vertex, and the next vertex.
+If it is a turn, add an extra g value to that node.
+By doing so, we can get a shortest path considering turning weight. 
 ## Usage
 The code requires the external library [boost](https://www.boost.org/).
 If you are using Ubantu, you can install it simply by
@@ -26,7 +28,7 @@ Then, you are able to run the code:
 - s: the start label 
 - g: the goal label
 
-You can define your owned turning consideration in "A-star-with-least-turning/src/graph_utils.cpp" isTurning founction
+You can define your owned turning weight in "A-star-with-least-turning/src/graph_utils.cpp" isTurning founction
 
 The idea is that if the robot is doing turning, then it will add extra g_value to the node. 
 Hence, when the a star calculates the shortest path, the turning will be considered. 
