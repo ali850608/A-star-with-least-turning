@@ -1,12 +1,5 @@
-# PBS
-A suboptimal solver for Multi-Agent Path Finding
-
-Priority-Based Search (PBS) is an efficient suboptimal algorithm for solving Multi-Agent Path Finding (MAPF).
-More details can be found in our paper at AAAI 2019 [1]. 
-(This implementation is not the original code for producing the results in the paper.)
-
-The implementation provides a SIPP option that uses SIPPS [2] (instead of state-time A*) 
-in the low level of PBS to plan paths for agents.
+# A star with least turning
+A modified a star algorithm for topological map to generate a shortest path considering turning counts. 
 
 ## Usage
 The code requires the external library [boost](https://www.boost.org/).
@@ -14,20 +7,13 @@ If you are using Ubantu, you can install it simply by
 ```shell script
 sudo apt install libboost-all-dev
 ``` 
-Another easy way of installing the boost library is to install anaconda/miniconda and then
-```shell script
-conda install -c anaconda libboost
-```
-which works for a variety of [systems](https://anaconda.org/anaconda/libboost)
-(including linux, osx, and win).
-
 If neither of the above method works, you can also follow the instructions
 on the [boost](https://www.boost.org/) website and install it manually.
 
 
 After you installed boost and downloaded the source code, go into the directory of the source code and compile it with CMake:
 ```shell script
-cmake -DCMAKE_BUILD_TYPE=RELEASE .
+cmake .
 make
 ```
 

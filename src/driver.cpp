@@ -1,3 +1,5 @@
+#include <boost/program_options.hpp>
+#include <boost/tokenizer.hpp>
 #include <chrono>
 #include <filesystem>
 #include <fstream>
@@ -8,12 +10,23 @@
 
 int main(int argc, char * argv[])
 {
+  namespace po = boost::program_options;
+  // Declare the supported options.
+  po::options_description desc("Allowed options");
+  desc.add_options()("help", "produce help message")(
+    "map,m", po::value<std::string>()->required(), "map name in map folder")(
+    "start,s", po::value<std::string>()->required(), "start label")(
+    "goal,g", po::value<std::string>()->required(), "goal label");
+  po::variables_map vm;
+  po::store(po::parse_command_line(argc, argv, desc), vm);
+
+  std::string file_dir = "map/" + vm["map"].as<std::string>() + ".dot";
   NavGraph graph_;
-  std::filesystem::path mapFile = std::filesystem::current_path() / "map/twenty_robots.dot";
+  std::filesystem::path mapFile = std::filesystem::current_path() / file_dir;
   std::string graph_name_ = loadGraph(graph_, mapFile.string());
 
-  std::optional<VertexDesc> v1 = getVertexFromLabel(graph_, "l06");
-  std::optional<VertexDesc> v2 = getVertexFromLabel(graph_, "r01");
+  std::optional<VertexDesc> v1 = getVertexFromLabel(graph_, vm["start"].as<std::string>());
+  std::optional<VertexDesc> v2 = getVertexFromLabel(graph_, vm["goal"].as<std::string>());
 
   SpaceTimeAStar * a_star = new SpaceTimeAStar();
 
