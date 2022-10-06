@@ -8,7 +8,6 @@ public:
   int g_val;
   int h_val = 0;
   LLNode * parent;
-  int timestep = 0;
   bool in_openlist = false;
   bool wait_at_goal;
   // the action is to wait at the goal vertex or not. This is used for >lenghth constraints
@@ -31,23 +30,15 @@ public:
   };  // used by OPEN (heap) to compare nodes (top of the heap has min f-val, and then highest g-val)
 
   LLNode()
-  : location(0),
-    g_val(0),
-    h_val(0),
-    parent(nullptr),
-    timestep(0),
-    in_openlist(false),
-    wait_at_goal(false)
+  : location(0), g_val(0), h_val(0), parent(nullptr), in_openlist(false), wait_at_goal(false)
   {
   }
 
-  LLNode(
-    int location, int g_val, int h_val, LLNode * parent, int timestep, bool in_openlist = false)
+  LLNode(int location, int g_val, int h_val, LLNode * parent, bool in_openlist = false)
   : location(location),
     g_val(g_val),
     h_val(h_val),
     parent(parent),
-    timestep(timestep),
     in_openlist(in_openlist),
     wait_at_goal(false)
   {
@@ -60,7 +51,6 @@ public:
     g_val = other.g_val;
     h_val = other.h_val;
     parent = other.parent;
-    timestep = other.timestep;
     wait_at_goal = other.wait_at_goal;
     is_goal = other.is_goal;
   }
@@ -77,9 +67,8 @@ public:
 
   AStarNode() : LLNode() {}
 
-  AStarNode(
-    VertexDesc loc, int g_val, int h_val, LLNode * parent, int timestep, bool in_openlist = false)
-  : LLNode(loc, g_val, h_val, parent, timestep, in_openlist)
+  AStarNode(VertexDesc loc, int g_val, int h_val, LLNode * parent, bool in_openlist = false)
+  : LLNode(loc, g_val, h_val, parent, in_openlist)
   {
   }
 
@@ -91,8 +80,7 @@ public:
     size_t operator()(const AStarNode * n) const
     {
       size_t loc_hash = std::hash<int>()(n->location);
-      size_t timestep_hash = std::hash<int>()(n->timestep);
-      return (loc_hash ^ (timestep_hash << 1));
+      return (loc_hash ^ 2);
     }
   };
 
@@ -103,8 +91,8 @@ public:
   {
     bool operator()(const AStarNode * s1, const AStarNode * s2) const
     {
-      return (s1 == s2) || (s1 && s2 && s1->location == s2->location &&
-                            s1->timestep == s2->timestep && s1->wait_at_goal == s2->wait_at_goal);
+      return (s1 == s2) ||
+             (s1 && s2 && s1->location == s2->location && s1->wait_at_goal == s2->wait_at_goal);
     }
   };
 };

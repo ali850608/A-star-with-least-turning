@@ -19,7 +19,7 @@ Path SpaceTimeAStar::findOptimalPath(
   auto my_heuristic = compute_heuristics(graph, goal_location);
 
   // generate start and add it to the OPEN & FOCAL list
-  auto start = new AStarNode(start_location, 0, 0, nullptr, 0);
+  auto start = new AStarNode(start_location, 0, 0, nullptr);
 
   start->open_handle = open_list.push(start);
   start->in_openlist = true;
@@ -34,7 +34,6 @@ Path SpaceTimeAStar::findOptimalPath(
       break;
     }
     for (VertexDesc next_location : get_adjacent_locations(graph, curr->location)) {
-      int next_timestep = curr->timestep + 1;
       int next_g_val = curr->g_val + getTwoVertexWeight(graph, curr->location, next_location);
       if (
         curr->parent != nullptr &&
@@ -43,7 +42,7 @@ Path SpaceTimeAStar::findOptimalPath(
       int next_h_val = my_heuristic[next_location];
 
       // generate (maybe temporary) node
-      auto next = new AStarNode(next_location, next_g_val, next_h_val, curr, next_timestep);
+      auto next = new AStarNode(next_location, next_g_val, next_h_val, curr);
 
       // try to retrieve it from the hash table
       auto it = allNodes_table.find(next);
